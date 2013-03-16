@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
 gem 'bootstrap-sass'
+gem 'bcrypt-ruby'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -23,12 +24,16 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-group :test do
-	gem 'capybara', '1.1.2'
-end
-
 group :production do
 	gem 'pg'
+end
+
+group :development do
+	gem 'annotate'
+end
+
+group :test do
+	gem 'capybara', '1.1.2'
 end
 
 gem 'jquery-rails'
