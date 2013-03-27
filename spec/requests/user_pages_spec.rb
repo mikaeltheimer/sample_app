@@ -44,6 +44,10 @@ describe "UserPages" do
           expect { click_link('delete') }.to change(User, :count).by(-1)
         end
         it { should_not have_link('delete', href: user_path(admin)) }
+
+       it "should not allow admin delete himself" do
+         expect { delete user_path(admin) }.not_to change(User, :count).by(-1)
+       end
       end
     end
   end
@@ -87,7 +91,7 @@ describe "UserPages" do
         fill_in "Name",         with: "Example User"
         fill_in "Email",        with: "user@example.com"
         fill_in "Password",     with: "foobar"
-        fill_in "Confirmation", with: "foobar"
+        fill_in "Password confirmation", with: "foobar"
       end
 
       it "should create a user" do
@@ -139,7 +143,7 @@ describe "UserPages" do
         fill_in "Name",         with: new_name
         fill_in "Email",        with: new_email
         fill_in "Password",     with: user.password
-        fill_in "Confirmation", with: user.password
+        fill_in "Password confirmation", with: user.password
         click_button "Save changes"
       end
 

@@ -45,6 +45,8 @@ describe "Authentication" do
 			describe "followed by signout" do
 				before { click_link "Sign out" }
 				it { should have_link('Sign in') }
+				it { should_not have_link('Profile') }
+				it { should_not have_link('Serrings') }
 			end
 		end
 	end
@@ -75,9 +77,7 @@ describe "Authentication" do
 			describe "when attempting to visit a protected page" do
 				before do
 					visit edit_user_path(user)
-					fill_in "Email",		with: user.email
-					fill_in "Password",	with: user.password
-					click_button "Sign in"
+					sign_in user
 				end
 
 				describe "after signin in" do
@@ -105,7 +105,7 @@ describe "Authentication" do
 			end
 		end
 
-		describe "ad non-admin users" do
+		describe "as non-admin users" do
 			let(:user) { FactoryGirl.create(:user) }
 			let(:non_admin) { FactoryGirl.create(:user) }
 
