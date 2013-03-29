@@ -9,4 +9,11 @@ FactoryGirl.define do
 			admin true
 		end
 	end
+
+	factory :micropost do
+			content "Lorem ipsum"
+			user
+			# Here we tell Factory Girl about the micropost’s associated user
+			# just by including a user in the definition of the factory
+		end
 end

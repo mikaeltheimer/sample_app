@@ -15,6 +15,10 @@
 class User < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation
   has_secure_password
+  has_many :microposts,
+            # pour s'assurer que les microposts sont supprimés
+            # lorsque l'user est supprimé
+            dependent: :destroy
 
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
@@ -28,6 +32,11 @@ class User < ActiveRecord::Base
 
   validates :password, length: { minimum: 6 }
   validates :password_confirmation, presence: true
+
+  def feed
+    # This is preliminary
+    Micropost.where("user_id = ?", id) # équivalent à simplement utiliser "microposts"
+  end
 
   private
 
