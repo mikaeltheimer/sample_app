@@ -26,6 +26,8 @@ describe "Static Pages" do
           page.should have_selector("li##{item.id}", text: item.content)
         end
       end
+      
+      it { should have_content(user.microposts.count) }
     end
   end
 
