@@ -1,0 +1,14 @@
+$("#follow_form").html("<%= escape_javascript(render('users/follow')) %>")
+$("#followers").html('<%= @user.followers.count %>')
+
+/* to manipulate the follow_form element, we will use the syntax
+   $("#follow_form")
+   (Recall from Listing 11.23 that this is a div that wraps the form,
+   not the form itself.)
+
+   The html method updates the HTML inside the relevant element with
+   the contents of its argument.
+
+   The escape_javascript function is needed to escape out the result
+   when inserting HTML in a JavaScript file
+*/

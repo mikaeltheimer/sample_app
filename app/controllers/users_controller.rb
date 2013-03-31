@@ -2,7 +2,8 @@ class UsersController < ApplicationController
   
   # vérifier que le bon utilisateur est signed-in pour
   # pouvoir accéder aux fonctions edit et update
-  before_filter :signed_in_user, only: [:index, :edit, :update, :destroy]
+  before_filter :signed_in_user, only: [:index, :edit, :update, :destroy,
+                                        :following, :followers]
   before_filter :not_signed_in_user, only: [:new, :create]
   before_filter :correct_user, only: [:edit, :update]
   before_filter :admin_user, only: :destroy
@@ -14,7 +15,7 @@ class UsersController < ApplicationController
   def show
   	@user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])
-    @micropost = current_user.microposts.build
+    @micropost = @user.microposts.build
   end
 
   def create
@@ -60,6 +61,20 @@ class UsersController < ApplicationController
       flash[:success] = "User deleted."
       redirect_to users_url
     end
+  end
+
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.followed_users.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'
   end
 
   private
